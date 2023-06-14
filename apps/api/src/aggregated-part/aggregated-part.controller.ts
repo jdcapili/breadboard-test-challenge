@@ -1,7 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Render, Query } from '@nestjs/common';
 import { AggregatedPartService } from './aggregated-part.service';
-import { CreateAggregatedPartDto } from './dto/create-aggregated-part.dto';
-import { UpdateAggregatedPartDto } from './dto/update-aggregated-part.dto';
 
 @Controller('aggregated-part')
 export class AggregatedPartController {

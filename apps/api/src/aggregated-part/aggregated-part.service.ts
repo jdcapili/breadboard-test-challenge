@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAggregatedPartDto } from './dto/create-aggregated-part.dto';
-import { UpdateAggregatedPartDto } from './dto/update-aggregated-part.dto';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom, tap } from 'rxjs';
 import { AggregatedPart, Packaging, PriceBreak } from '../shared/types/aggregated-part';
@@ -8,10 +6,6 @@ import { AggregatedPart, Packaging, PriceBreak } from '../shared/types/aggregate
 @Injectable()
 export class AggregatedPartService {
   constructor(private httpService: HttpService) {};
-
-  create(createAggregatedPartDto: CreateAggregatedPartDto) {
-    return 'This action adds a new aggregatedPart';
-  }
 
   async findAll(partNumber: string) {
     const myArrow = await lastValueFrom(this.httpService
@@ -25,18 +19,6 @@ export class AggregatedPartService {
     const agg = aggregateParts(myArrow.data.pricingResponse, tti.data.parts, partNumber)
 
     return agg;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} aggregatedPart`;
-  }
-
-  update(id: number, updateAggregatedPartDto: UpdateAggregatedPartDto) {
-    return `This action updates a #${id} aggregatedPart`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} aggregatedPart`;
   }
 }
 
@@ -159,22 +141,6 @@ const ttiAggregation = (aggregates, ttiData, queryParam) => {
 
     base.description.add(element.description);
     base.sourceParts.add('TTI');
-
-    // not sure what to do when productDoc, URL, and Image url are different(from a different source)
-    // element.urlData?.forEach(e => {
-    //   let k = '';
-    //   if (e.type === 'Datasheet'){
-    //     k = 'productDoc';
-    //   }else if (e.type === 'Part Details') {
-    //     k = 'productUrl';
-    //   }else if (e.type === 'Image Small') {
-    //     k = 'productImageUrl';
-    //   }
-
-    //   if (k !== ''){
-    //     base[k] = e.value;
-    //   }
-    // })
 
     base.totalStock += parseInt(element.availableToSell)
     base.packaging.push(ttiPackaging(aggregates, element))
