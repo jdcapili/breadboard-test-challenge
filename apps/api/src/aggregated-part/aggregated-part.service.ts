@@ -3,8 +3,7 @@ import { CreateAggregatedPartDto } from './dto/create-aggregated-part.dto';
 import { UpdateAggregatedPartDto } from './dto/update-aggregated-part.dto';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom, tap } from 'rxjs';
-import { AggregatedPart, Packaging, PriceBreak } from 'src/shared/types/aggregated-part';
-// import { aggregateParts } from './helpers';
+import { AggregatedPart, Packaging, PriceBreak } from '../shared/types/aggregated-part';
 
 @Injectable()
 export class AggregatedPartService {
@@ -23,12 +22,8 @@ export class AggregatedPartService {
       .get("https://backend-takehome.s3.us-east-1.amazonaws.com/tti.json")
     )
     
-
-    // aggregateParts([...myArrow.data.pricingResponse, ...tti.data.parts])
     const agg = aggregateParts(myArrow.data.pricingResponse, tti.data.parts, partNumber)
-    // console.log(agg)
-    // return myArrow.data.pricingResponse; 
-    // return tti.data
+
     return agg;
   }
 
